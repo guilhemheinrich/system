@@ -1,0 +1,22 @@
+Bootstrap: docker
+From: tomcat:9.0
+
+%help
+    tomcat:9.0 build for ISSAC ws
+
+%files
+    tomcat-users.xml
+
+%post
+    useradd -d /home/issac -m -p issac666 issac
+    mkdir /home/issac/issac-ws
+    
+    apt-get update
+
+    # always usefull
+    apt-get install nano
+
+    echo "org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true" >> /usr/local/tomcat/conf/catalina.properties
+    mv /tomcat-users.xml /usr/local/tomcat/conf/
+    
+

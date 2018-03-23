@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: tomcat:9.0
+
+%files
+    tomcat-users.xml
+
+%post
+    useradd -d /home/issac -m -p issac666 issac
+    mkdir /home/issac/issac-ws
+    
+    apt-get update
+
+    # always usefull
+    apt-get install nano
+
+    mv /tomcat-users.xml /usr/local/tomcat/conf/

@@ -1,0 +1,62 @@
+Bootstrap: docker
+From: ubuntu:trusty
+
+%help
+    Ubuntu 14.04 LTS build for AgroSystem platform
+
+
+%post
+    useradd -d /home/system -m -p systemc666 system
+
+    apt-get update
+    apt-get install apache2 -y
+
+
+    apt-get install libapache2-mod-php5 php5-cli curl git  -y
+
+    # Installing composer
+    curl -sS https://getcomposer.org/installer | php
+    mv composer.phar /usr/local/bin/composer
+    chown -R system ~/.composer/
+
+    chown -R system:www-data /var/www/html
+    # su -c 'composer create-project --prefer-dist yiisoft/yii2-app-basic /home/system/system' system
+    # chmod +x /home/system/system/yii
+    # mv system/ /var/www/html/
+    # chown -R system:www-data /var/www/html/system
+
+    # apt-get install  curl git php-pear php5-dev libpcre3-dev -y
+    # apt-get install php5-mysql php5-sqlite php5-pgsql php5-mongo -y
+
+
+
+
+    # # Install mongo 
+    # # pecl need php-pear 
+    # # mongo need php5-dev
+    # apt-get install pkg-config
+    # pecl install mongodb
+    # # Enable mongo in php.ini
+    # echo 'extension=mongodb.so' >> /etc/php5/apache2/php.ini
+
+    # pear install http_request2
+
+
+    # # Install bower-asset/jquery
+    # # will need a github token
+    # # 545a0569336f0fe7ed5942316b5150239c1c313f
+    # # https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+phis-VirtualBox+2017-12-22+1258
+    # su -c 'composer config -g github-oauth.github.com 545a0569336f0fe7ed5942316b5150239c1c313f' phis
+    # su -c 'composer global require "fxp/composer-asset-plugin:^1.2.0" ' phis
+    
+    # cd /var/www/html/phis/
+    # if [ -d vendor ] 
+    #     then rm -r vendor
+    # fi
+    # # Inspect php in apache2 
+    # echo '<?php phpinfo() ?>' > ../phpinfo.php
+    # # cp composer.json composer.json.old
+    # # cp composer.json.new composer.json
+    # su -c 'composer update --prefer-source --no-interaction -o' phis
+    # chmod -R g+rwx web/assets documents vendor/yiisoft/ runtime
+    # chmod g+w library/excelTools/tmp  
