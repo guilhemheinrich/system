@@ -1,25 +1,40 @@
 Bootstrap: docker
-From: ubuntu:trusty
+# From: ubuntu:trusty
+From: ubuntu:xenial
 
 %help
-    Ubuntu 14.04 LTS build for AgroSystem platform
+    # Ubuntu 14.04 LTS build for AgroSystem platform
+    Ubuntu 16.04 LTS build for AgroSystem platform
 
 
 %post
     useradd -d /home/system -m -p systemc666 system
 
     apt-get update
-    apt-get install apache2 -y
 
+    #install apache and other self-explainatory packages
+    apt-get install apache2 curl git nano -y
 
-    apt-get install libapache2-mod-php5 php5-cli curl git  -y
+    mkdir /var/www/html/system
 
+    # install php 7.0 and use it with apache2
+    apt-get install php7.0 php7.0-fpm libapache2-mod-php7.0  -y
+    
+    # use pgsql with php
+    apt-get install php-pgsql -y
+    
     # Installing composer
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/local/bin/composer
     chown -R system ~/.composer/
 
+    # required for <https://github.com/BorderCloud/SPARQL>
+    # apt-get install php-mbstring php7.0-xml php-curl -y
+
+
+
     chown -R system:www-data /var/www/html
+
     # su -c 'composer create-project --prefer-dist yiisoft/yii2-app-basic /home/system/system' system
     # chmod +x /home/system/system/yii
     # mv system/ /var/www/html/

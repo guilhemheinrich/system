@@ -5,7 +5,7 @@ From: tomcat:9.0
     tomcat-users.xml
 
 %post
-    useradd -d /home/issac -m -p issac666 issac
+    useradd -d /home/issac -m -p issacc666 issac
     mkdir /home/issac/issac-ws
     
     apt-get update

@@ -6,4 +6,5 @@ docker run -it \
 -e POSTGRES_USER=issac \
 -v issac_psql:/var/lib/postgresql/data \
 -d \
+--rm \
 postgres:10
