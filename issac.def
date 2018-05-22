@@ -1,0 +1,95 @@
+Bootstrap: docker
+From: ubuntu:xenial
+
+
+%runscript
+    exec echo "Try running with --app composer/start"
+    exec sh /start.sh 
+
+%apprun composer
+    cd /var/www/html/issac
+    exec composer "$@"
+
+%apprun start
+    exec sh /start.sh 
+
+
+
+%environment
+    # set data directory in the container for rdf4j
+    JAVA_OPTS='-Dorg.eclipse.rdf4j.appdata.basedir=/home/issac/RDF4J'
+    export JAVA_OPTS
+
+    # for tomcat
+    CATALINA_HOME=/home/issac/tomcat/apache-tomcat-9.0.8
+    export CATALINA_HOME
+
+
+%files
+    init_files/tomcat-users.xml /
+    # init_files/apache-tomcat-9.0.8.tar.gz /
+    init_files/rdf4j-server.war /
+    init_files/rdf4j-workbench.war /
+    init_files/start.sh /
+
+
+
+%post
+    useradd -d /home/issac -m -p issacc666 issac
+    mkdir /opt/tomcat
+    
+    apt-get update
+
+    # always usefull
+    apt-get install -y nano default-jdk wget apache2 curl git
+
+    # install tomcat 9 follwoing <https://www.rosehosting.com/blog/install-tomcat-9-on-an-ubuntu-16-04-vps/>
+    useradd -r tomcat9 --shell /bin/false
+
+    # wget http://mirror.symnds.com/software/Apache/tomcat/tomcat-9/v9.0.0.M9/bin/apache-tomcat-9.0.0.M9.tar.gz
+    mkdir /home/issac/tomcat
+    cd /home/issac/tomcat
+    wget http://apache.mindstudios.com/tomcat/tomcat-9/v9.0.8/bin/apache-tomcat-9.0.8.tar.gz
+    tar -zxf apache-tomcat-9.0.8.tar.gz
+    ln -s apache-tomcat-9.0.8 tomcat-latest
+    chown -hR tomcat9: tomcat-latest apache-tomcat-9.0.8
+
+    mkdir /var/www/html/issac
+    chown -R issac:www-data /var/www/html
+
+    # # tomcat config file
+
+    cp /tomcat-users.xml /home/issac/tomcat/apache-tomcat-9.0.8/conf/
+    cp /rdf4j-server.war /home/issac/tomcat/apache-tomcat-9.0.8/webapps/
+    cp /rdf4j-workbench.war /home/issac/tomcat/apache-tomcat-9.0.8/webapps/
+
+
+
+
+    # # From wiki <https://mulcyber.toulouse.inra.fr/plugins/mediawiki/wiki/phenome/index.php/D%C3%A9ploiement_de_issac_champ>
+    echo "org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true" >> /home/issac/tomcat/apache-tomcat-9.0.8/conf/catalina.properties
+
+    # # install psql
+    apt-get install postgresql postgresql-contrib -y
+    
+
+    # install php 7.0 and use it with apache2
+    apt-get install php7.0 php7.0-fpm libapache2-mod-php7.0  -y
+    
+    # use pgsql with php
+    apt-get install php-pgsql -y
+    
+    # Installing composer
+    curl -sS https://getcomposer.org/installer | php
+    mv composer.phar /usr/local/bin/composer
+    chown -R issac ~/.composer/
+
+    # required for <https://github.com/BorderCloud/SPARQL>
+    apt-get install php-mbstring php7.0-xml php-curl -y
+
+
+
+    chown -R issac:www-data /var/www/html
+
+
+
