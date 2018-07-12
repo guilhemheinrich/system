@@ -1,5 +1,5 @@
 CREATE DATABASE administration;
-
+connect administration
 CREATE EXTENSION chkpass;
 
 CREATE TABLE users

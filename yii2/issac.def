@@ -18,7 +18,7 @@ From: ubuntu:xenial
     mkdir /var/www/html/system
 
     # install php 7.0 and use it with apache2
-    apt-get install php7.0 php7.0-fpm libapache2-mod-php7.0  -y
+    apt-get install php7.0 php7.0-fpm libapache2-mod-php7.0 php-mbstring php-xml -y
     
     # use pgsql with php
     apt-get install php-pgsql -y
