@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="http://purl.obolibrary.org/obo/TEMP" uri="ontobiotop.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="http://purl.obolibrary.org/obo/envo.owl" uri="db/dumps/envo.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="http://purl.obolibrary.org/obo/po.owl" uri="db/dumps/po.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="http://www.semanticweb.org/heinrich/ontologies/2018/administration" uri="db/toLoad/administration.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="http://www.w3.org/2006/12/owl2-xml#" uri="db/dumps/ontobiotop.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1534520366792" name="shadowed:http://purl.obolibrary.org/obo/envo.owl" uri="db/toLoad/envo.owl"/>
+    </group>
+</catalog>
